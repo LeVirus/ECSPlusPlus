@@ -15,7 +15,9 @@ export
         EntitiesManager();
         ~EntitiesManager() = default;
         void setNumberComponents(uint32_t num);
-        void createEntity(const VectUI_t &vect);
+        uint32_t createEntity(const VectUI_t &vect);
+        void deleteEntity(uint32_t entityNum);
+        void clear();
     private:
         uint32_t m_numComponants = 0;
         VectUI_t m_cacheDeletedEntities;
