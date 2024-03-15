@@ -5,7 +5,9 @@ module System;
 namespace ECS
 {
 
-System::System()
+//====================================================================
+template <uint32_t T>
+System<T>::System() : m_arrEntities(T)
 {
 
 }
