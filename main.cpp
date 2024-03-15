@@ -1,11 +1,12 @@
 module;
 
 import <iostream>;
-module EntitiesMan;//g++ -std=c++20 -fmodules-ts -xc++-system-header iostream
+//g++ -std=c++20 -fmodules-ts -xc++-system-header iostream
+module EntitiesMan;
 
 int main()
 {
-    EntitiesManager ecs;
+    ECS::EntitiesManager ecs;
     std::cout << "HELLO\n";
     return 0;
 }

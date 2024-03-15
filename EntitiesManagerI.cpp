@@ -6,6 +6,9 @@ import <algorithm>;
 
 module EntitiesMan;
 
+namespace ECS
+{
+
 //====================================================================
 EntitiesManager::EntitiesManager()
 {
@@ -61,4 +64,6 @@ void EntitiesManager::clear()
 {
     m_cacheDeletedEntities.clear();
     m_vectEntities.clear();
+}
+
 }

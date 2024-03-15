@@ -5,6 +5,12 @@ CONFIG -= qt
 QMAKE_CXXFLAGS += -std=c++20 -fmodules-ts #-fcoroutines #-xc++-system-header iostream#-fmodule-header
 
 SOURCES += \
-        EntitiesManagerH.cpp \
+        Headers/ECSManagerH.cpp \
+        Headers/SystemManagerH.cpp \
+        Headers/EntitiesManagerH.cpp \
+        Headers/SystemH.cpp \
+        ECSManagerI.cpp \
         EntitiesManagerI.cpp \
+        SystemI.cpp \
+        SystemManagerI.cpp \
         main.cpp

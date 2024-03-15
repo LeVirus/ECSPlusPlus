@@ -6,6 +6,8 @@ import <vector>;
 
 export
 {
+    namespace ECS
+    {
     using VectUI_t = std::vector<uint32_t>;
     using VectVectUI_t = std::vector<VectUI_t>;
 
@@ -23,4 +25,5 @@ export
         VectUI_t m_cacheDeletedEntities;
         VectVectUI_t m_vectEntities;
     };
+    }
 }
