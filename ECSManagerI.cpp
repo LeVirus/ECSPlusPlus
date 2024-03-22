@@ -4,13 +4,14 @@ module;
 // import <cassert>;
 // import <algorithm>;
 
-module ECSMain;
+module M_ECSMain;
 
 namespace ECS
 {
 
 //====================================================================
-ESCManager::ESCManager()
+template <uint32_t T>
+ESCManager<T>::ESCManager(uint32_t numComponents) : m_systemsManager(m_entitiesManager),  m_numComponents(numComponents)
 {
 
 }

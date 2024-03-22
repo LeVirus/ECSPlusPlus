@@ -4,7 +4,7 @@ import <iostream>;
 import <cassert>;
 import <algorithm>;
 
-module EntitiesMan;
+module M_EntitiesMan;
 
 namespace ECS
 {
