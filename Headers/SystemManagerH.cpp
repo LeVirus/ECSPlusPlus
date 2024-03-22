@@ -21,7 +21,7 @@ export
         bool addNewSystem(std::unique_ptr<System<T>> system);
         inline const VectVectUI_t &getVectEntities()const
         {
-            return m_entitiesMan.getVectEntities();
+            return m_entitiesMan->getVectEntities();
         }
     private:
         const EntitiesManager *m_entitiesMan = nullptr;

@@ -5,7 +5,9 @@ import <vector>;
 import <concepts>;
 import <cstdint>;
 
-import M_SystemMan;
+// import M_SystemMan;
+
+class SystemManager;
 
 export
 {
