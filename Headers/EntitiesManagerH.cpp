@@ -25,6 +25,7 @@ export
         }
     private:
         uint32_t m_numComponants = 0;
+        //mem location of deleted entities for future entity creation
         VectUI_t m_cacheDeletedEntities;
         VectVectUI_t m_vectEntities;
     };
