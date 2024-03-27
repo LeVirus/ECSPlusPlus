@@ -6,8 +6,10 @@ export
     {
         class ComponentsManager
         {
+        public:
             ComponentsManager();
             ~ComponentsManager() = default;
+        private:
         };
     }
 }

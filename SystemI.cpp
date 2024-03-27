@@ -21,16 +21,25 @@ void System<T>::updateEntities()
     for(uint32_t i = 0; i < vect.size(); ++i)
     {
         ok = true;
-        for(uint32_t j = 0; j < m_cacheUsedComponent.size(); ++j)
+        for(uint32_t j : m_cacheUsedComponent)
         {
-            if(m_arrEntities[m_cacheUsedComponent[j]] != m_cacheUsedComponent[j])
+            if(m_arrEntities[j] != vect[i][j])
             {
                 ok = false;
                 break;
             }
         }
-        m_usedEntities.emplace_back(vect[i]);
+        m_usedEntities.insert(i);
     }
+}
+
+//====================================================================
+template<uint32_t T>
+void System<T>::addComponentsToSystem(uint32_t typeComponent, uint32_t numberOfComponent)
+{
+    assert(m_arrEntities.size() < typeComponent);
+    m_arrEntities[typeComponent] = numberOfComponent;
+    m_cacheUsedComponent.insert(typeComponent);
 }
 
 }

@@ -5,6 +5,7 @@ import <vector>;
 import <concepts>;
 import <cstdint>;
 import <cassert>;
+import <set>;
 
 // import M_SystemMan;
 
@@ -27,12 +28,7 @@ export
         {
             m_systemManager = systemManager;
         }
-        inline void addComponentsToSystem(uint32_t typeComponent, uint32_t numberOfComponent)
-        {
-            assert(m_arrEntities.size() < typeComponent);
-            m_arrEntities[typeComponent] = numberOfComponent;
-            m_cacheUsedComponent.emplace_back(typeComponent);
-        }
+        void addComponentsToSystem(uint32_t typeComponent, uint32_t numberOfComponent);
     protected:
         System();
         void updateEntities();
@@ -40,8 +36,10 @@ export
         const SystemManager *m_systemManager = nullptr;
         //Definition of needed components
         std::array<uint32_t, T> m_arrEntities;
-        VectUI_t m_usedEntities, m_cacheUsedComponent;
+        std::set<uint32_t> m_usedEntities, m_cacheUsedComponent;
     };
 
+    template <typename S, uint32_t T>
+    concept System_C = std::derived_from<S, System<T>>;
     }
 }

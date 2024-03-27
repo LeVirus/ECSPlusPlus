@@ -24,6 +24,7 @@ bool SystemManager<T>::addNewSystem(std::unique_ptr<System<T>> system)
         return false;
     }
     m_vectSystem.emplace_back(std::move(system));
+    m_vectSystem.back().linkSystemManager(this);
     return true;
 }
 
