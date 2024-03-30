@@ -10,19 +10,15 @@ namespace ECS
 {
 
 //====================================================================
-EntitiesManager::EntitiesManager()
+template <uint32_t T>
+EntitiesManager<T>::EntitiesManager() : m_numComponants(T)
 {
 
 }
 
 //====================================================================
-void EntitiesManager::setNumberComponents(uint32_t num)
-{
-    m_numComponants = num;
-}
-
-//====================================================================
-uint32_t EntitiesManager::createEntity(const VectUI_t &vect)
+template <uint32_t T>
+uint32_t EntitiesManager<T>::createEntity(const VectUI_t &vect)
 {
     uint32_t final;
     if(m_numComponants == 0)
@@ -45,7 +41,8 @@ uint32_t EntitiesManager::createEntity(const VectUI_t &vect)
 }
 
 //====================================================================
-void EntitiesManager::deleteEntity(uint32_t entityNum)
+template <uint32_t T>
+void EntitiesManager<T>::deleteEntity(uint32_t entityNum)
 {
     if(entityNum >= m_vectEntities.size())
     {
@@ -60,7 +57,8 @@ void EntitiesManager::deleteEntity(uint32_t entityNum)
 }
 
 //====================================================================
-void EntitiesManager::clear()
+template <uint32_t T>
+void EntitiesManager<T>::clear()
 {
     m_cacheDeletedEntities.clear();
     m_vectEntities.clear();

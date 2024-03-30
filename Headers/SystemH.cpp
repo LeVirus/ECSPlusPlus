@@ -1,6 +1,7 @@
 export module M_System;
 
 
+import <array>;
 import <vector>;
 import <concepts>;
 import <cstdint>;

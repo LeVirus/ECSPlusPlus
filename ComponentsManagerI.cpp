@@ -10,7 +10,8 @@ namespace ECS
 {
 
 //====================================================================
-ComponentsManager::ComponentsManager()
+template <uint32_t T>
+ComponentsManager<T>::ComponentsManager()
 {
 
 }

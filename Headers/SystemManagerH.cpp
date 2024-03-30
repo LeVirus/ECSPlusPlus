@@ -16,7 +16,7 @@ export
     class SystemManager
     {
     public:
-        SystemManager(const EntitiesManager *entitiesMan);
+        SystemManager(const EntitiesManager<T> *entitiesMan);
         ~SystemManager() = default;
         bool addNewSystem(std::unique_ptr<System<T>> system);
         inline const VectVectUI_t &getVectEntities()const
@@ -24,7 +24,7 @@ export
             return m_entitiesMan->getVectEntities();
         }
     private:
-        const EntitiesManager *m_entitiesMan = nullptr;
+        const EntitiesManager<T> *m_entitiesMan = nullptr;
         uint32_t m_numComponents = 0;
         std::vector<std::unique_ptr<System<T>>> m_vectSystem;
     };

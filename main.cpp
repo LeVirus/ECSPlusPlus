@@ -1,13 +1,14 @@
-module;
+// module;
 
 import <iostream>;
 //g++ -std=c++23 -fmodules-ts -xc++-system-header iostream
-module M_EntitiesMan;
+
+import M_ECSMain;
 
 int main()
 {
-    ECS::EntitiesManager ecs;
-    std::cout << __GLIBC_MINOR__ << " HELLO\n";
+    ECS::ESCManager<4> ecs;
+    std::cout << " LLLL\n";
 
     return 0;
 }

@@ -2,6 +2,8 @@ module;
 
 module M_System;
 
+import M_SystemMan;
+
 namespace ECS
 {
 

@@ -9,7 +9,7 @@ namespace ECS
 
 //====================================================================
 template <uint32_t T>
-SystemManager<T>::SystemManager(const EntitiesManager *entitiesMan) : m_entitiesMan(entitiesMan)
+SystemManager<T>::SystemManager(const EntitiesManager<T> *entitiesMan) : m_entitiesMan(entitiesMan)
 {
 
 }
