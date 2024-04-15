@@ -1,14 +1,5 @@
-// module;
-
-import <iostream>;
-//g++ -std=c++23 -fmodules-ts -xc++-system-header iostream
-
-// import M_ECSMain;
-// import M_EntitiesMan;
-// import M_SystemMan;
-// import M_System;
-// import M_EntitiesMan;
-import M_ECSMain;
+#include <iostream>
+#include <ECSManager.hpp>
 
 int main()
 {

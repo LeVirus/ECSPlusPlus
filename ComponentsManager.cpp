@@ -1,10 +1,4 @@
-module;
-
-// import <iostream>;
-// import <cassert>;
-// import <algorithm>;
-
-module M_ComponentsMan;
+#include <ComponentsManager.hpp>
 
 namespace ECS
 {
