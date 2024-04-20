@@ -2,9 +2,7 @@
 
 #include <array>
 #include <vector>
-#include <concepts>
 #include <cstdint>
-#include <cassert>
 #include <set>
 
 namespace ECS

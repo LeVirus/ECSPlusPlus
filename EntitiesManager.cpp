@@ -1,4 +1,7 @@
 #include <EntitiesManager.hpp>
+#include <iostream>
+#include <cassert>
+#include <algorithm>
 
 namespace ECS
 {
@@ -59,3 +62,5 @@ void EntitiesManager<T>::clear()
 }
 
 }
+
+template class ECS::EntitiesManager<4u>;

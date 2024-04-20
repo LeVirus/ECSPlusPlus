@@ -3,8 +3,10 @@
 
 int main()
 {
-    ECS::ECSManager<4> ecs;
-    // ECS::SystemManager<4> cc;
+
+    // ECS::EntitiesManager<4u> dd;
+    ECS::ECSManager<4u> ecs;
+    // ECS::SystemManager<4> cc(&dd);
     std::cout << " LLLL\n";
 
     return 0;

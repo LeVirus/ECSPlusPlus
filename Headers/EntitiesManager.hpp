@@ -2,9 +2,6 @@
 
 #include <cstdint>
 #include <vector>
-#include <iostream>
-#include <cassert>
-#include <algorithm>
 
 using VectUI_t = std::vector<uint32_t>;
 using VectVectUI_t = std::vector<VectUI_t>;
@@ -31,7 +28,5 @@ private:
     VectUI_t m_cacheDeletedEntities;
     VectVectUI_t m_vectEntities;
 };
-
-
 
 }

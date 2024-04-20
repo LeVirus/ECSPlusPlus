@@ -2,7 +2,7 @@
 
 #include <cstdint>
 #include <vector>
-#include <ECSManager.hpp>
+#include <EntitiesManager.hpp>
 #include <SystemManager.hpp>
 
 using VectUI_t = std::vector<uint32_t>;

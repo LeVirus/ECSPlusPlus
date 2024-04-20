@@ -12,11 +12,10 @@ namespace ECS
 template <uint32_t T>
 class ComponentsManager
 {
-    public:
+public:
     ComponentsManager();
     ~ComponentsManager() = default;
-    private:
-    //T == ComponentNumber
+private:
     std::array<VectComp_t, T> m_contComponents;
 };
 }

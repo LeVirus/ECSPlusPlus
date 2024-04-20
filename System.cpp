@@ -41,3 +41,4 @@ void System<T>::addComponentsToSystem(uint32_t typeComponent, uint32_t numberOfC
 }
 
 }
+// template class ECS::System<4u>;

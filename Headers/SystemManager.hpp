@@ -22,7 +22,7 @@ template <uint32_t T>
 class SystemManager
 {
 public:
-    SystemManager(const EntitiesManager<T> *entitiesMan);
+    SystemManager(EntitiesManager<T> *entitiesMan);
     ~SystemManager() = default;
     bool addNewSystem(std::unique_ptr<System<T>> system);
     inline const VectVectUI_t &getVectEntities()const
