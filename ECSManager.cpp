@@ -16,5 +16,3 @@ ECSManager<T>::ECSManager() :m_systemsManager(&m_entitiesManager) , m_numCompone
 template ECS::ECSManager<4>::ECSManager(); // OK: explicit instantiation
 
 // template class ECS::ECSManager<4>;
-// template class ECS::EntitiesManager<4u>;
-
