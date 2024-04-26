@@ -5,14 +5,20 @@
 #include <memory>
 #include <Component.hpp>
 
-struct Test : ECS::Component
-{
-
-};
 
 
 namespace ECS
 {
+
+struct Test : ECS::Component
+{
+    int m_b;
+};
+
+struct TestB : ECS::Component
+{
+    int m_bs;
+};
 
 template <uint32_t T, Component_C... C>
 class ComponentsManager
@@ -22,6 +28,7 @@ public:
     ~ComponentsManager() = default;
     void addEntity(const std::array<bool, T> &vect);
     void addNewComponentType(C...);
+    void addNewComponentType();
 private:
     // template <Component_C... C>
     std::array<std::vector<C...>, T> m_contComponents;
@@ -29,3 +36,5 @@ private:
     std::vector<std::array<uint32_t, T>> m_refComponents;
 };
 }
+
+// template class ECS::ComponentsManager<4u, ECS::Test, ECS::TestB>;

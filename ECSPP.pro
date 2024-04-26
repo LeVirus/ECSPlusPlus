@@ -20,3 +20,4 @@ HEADERS += \
         Headers/EntitiesManager.hpp \
         Headers/System.hpp \
         Headers/SystemManager.hpp \
+    Headers/TemplateDeclaration.hpp

@@ -1,18 +1,19 @@
 #include <ECSManager.hpp>
+#include <ECSManager.hpp>
 #include <cstdint>
 
 namespace ECS
 {
 
 //====================================================================
-template <uint32_t T>
-ECSManager<T>::ECSManager() :m_systemsManager(&m_entitiesManager) , m_numComponents(T)
+template <uint32_t T, Component_C... C>
+ECSManager<T, C...>::ECSManager() :m_systemsManager(&m_entitiesManager) , m_componentsManager(), m_numComponents()
 {
 
 }
 
+// template ECS::ECSManager<4, Test>::ECSManager(); // OK: explicit instantiation
 }
 
-template ECS::ECSManager<4>::ECSManager(); // OK: explicit instantiation
 
 // template class ECS::ECSManager<4>;
