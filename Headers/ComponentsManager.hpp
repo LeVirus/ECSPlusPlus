@@ -66,7 +66,11 @@ public:
         assert(numEntity < m_refComponents.size());
         for(uint32_t i = 0; i < N; ++i)
         {
-            std::fill(m_refComponents[numEntity].begin(), m_refComponents[numEntity].end(), std::nullopt);
+            if(m_refComponents[numEntity][i])
+            {
+                m_refDelComponents[i].emplace_back(m_refComponents[numEntity][i]);
+                m_refComponents[numEntity][i] = std::nullopt;
+            }
         }
     }
 private:
@@ -89,7 +93,6 @@ private:
     //cache index of entities's component
     std::vector<std::array<std::optional<uint32_t>, N>> m_refComponents;
     std::array<std::vector<uint32_t>, N> m_refDelComponents;
-    std::vector<uint32_t> m_refDelEntities;
 };
 }
 

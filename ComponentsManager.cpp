@@ -36,7 +36,6 @@ template <uint32_t N, Component_C... C>
 void ComponentsManager<N, C...>::reserveEntities(uint32_t entitiesNumber)
 {
     m_refComponents.reserve(entitiesNumber);
-    m_refDelEntities.reserve(entitiesNumber);
     for(uint32_t i = 0; i < N; ++i)
     {
         std::get<i>(m_tup).reserve(entitiesNumber);
