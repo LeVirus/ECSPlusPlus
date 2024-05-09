@@ -23,9 +23,8 @@ public:
         return m_vectEntities;
     }
 private:
-    const uint32_t m_numComponants;
+    const uint32_t m_numTotalComponants;
     //mem location of deleted entities for future entity creation
-    VectUI_t m_cacheDeletedEntities;
     VectVectUI_t m_vectEntities;
 };
 

@@ -18,7 +18,10 @@ int main()
     ECS::TestB *b = new ECS::TestB();
     // std::get<0>(tt).push_back(*a);
     ECS::ComponentsManager<2, ECS::Test, ECS::TestB> compTest;
-    compTest.addEntity(0, std::array<uint32_t, 2u>{1, 1});
+    // compTest.addEntity(0, std::array<uint32_t, 2u>{1, 1});
+    compTest.addNewComponent<0, ECS::Test>();
+    compTest.removeEntity(0);
+    // compTest.removeEntity(5);
     // compTest.addEntity({true, true});
 
     // ECS::EntitiesManager<4u> dd;

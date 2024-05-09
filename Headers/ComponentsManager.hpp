@@ -4,6 +4,8 @@
 #include <cstdint>
 #include <optional>
 #include <memory>
+#include <set>
+#include <array>
 #include <iostream>
 #include <cassert>
 #include <Component.hpp>
@@ -14,6 +16,7 @@
 
 namespace ECS
 {
+
 
 // TEST=====================================================
 // using VectorTemp = std::vector<T>;
@@ -63,21 +66,22 @@ public:
     void reserveEntities(uint32_t entitiesNumber);
 
     //====================================================================
-    template <Component_C T>
+    // template <Component_C T>
     void removeEntity(uint32_t numEntity)
     {
         assert(numEntity < m_refComponents.size());
         for(uint32_t i = 0; i < N; ++i)
         {
-            if(m_refComponents[numEntity][i])
+            if(m_refComponents[numEntity][i].size() > 0)
             {
                 for(uint32_t j = 0; j < m_refComponents[numEntity][i].size(); ++j)
                 {
                     m_refDelComponents[i].emplace_back(m_refComponents[numEntity][i][j]);
                 }
-                m_refComponents[numEntity][i] = std::nullopt;
+                m_refComponents[numEntity][i].clear();
             }
         }
+        m_cacheDeletedEntities.insert(numEntity);
     }
 
     //====================================================================
@@ -96,12 +100,18 @@ public:
     }
 
     //====================================================================
-    void addEntity(uint32_t numEntity, const std::array<uint32_t, N> &vect)
+    uint32_t addEntity(const std::array<uint32_t, N> &vect)
     {
-        //if num entity > existing component ==> incoherence
-        assert(numEntity <= m_refComponents.size());
-        if(numEntity == m_refComponents.size())
+        uint32_t numEntity;
+        if(!m_cacheDeletedEntities.empty())
         {
+            std::set<uint32_t>::iterator it = m_cacheDeletedEntities.begin();
+            numEntity = *it;
+            m_cacheDeletedEntities.erase(it);
+        }
+        else
+        {
+            numEntity = m_refComponents.size();
             m_refComponents.emplace_back(std::array<VectUI_t, N>());
         }
         for(uint32_t i = 0; i < N; ++i)
@@ -109,17 +119,19 @@ public:
             if(vect[i] > 0)
             {
                 (*m_refComponents[numEntity][i]).reserve(vect[i]);
-                for(uint32_t j = 0; j < vect[i]; ++j)
-                {
-                    // std::vector<T> &vect = std::get<j>(m_tup);
-                    (*m_refComponents[numEntity][i]).emplace_back(addNewComponent<i>());
-                }
+                //PB de template instanciation des composants à faire manuellement dans le projet cible
+                // for(uint32_t j = 0; j < vect[i]; ++j)
+                // {
+                //     // std::vector<T> &vect = std::get<j>(m_tup);
+                //     (*m_refComponents[numEntity][i]).emplace_back(addNewComponent(j));
+                // }
             }
         }
+        return numEntity;
     }
-private:
+
     //====================================================================
-    template <Component_C T, uint32_t compType>
+    template <uint32_t compType, Component_C T>
     uint32_t addNewComponent()
     {
         std::vector<T> &vect = std::get<compType>(m_tup);
@@ -134,10 +146,12 @@ private:
         vect[i] = T();
         return i;
     }
+    void clear();
 private:
     std::tuple<std::vector<C>...> m_tup;
+    std::set<uint32_t> m_cacheDeletedEntities;
     //cache index of entities's component
-    std::vector<std::array<std::optional<VectUI_t>, N>> m_refComponents;
+    std::vector<std::array<VectUI_t, N>> m_refComponents;
     std::array<std::vector<uint32_t>, N> m_refDelComponents;
 };
 }

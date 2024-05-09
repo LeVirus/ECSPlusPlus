@@ -26,4 +26,14 @@ void ComponentsManager<N, C...>::reserveEntities(uint32_t entitiesNumber)
     }
 }
 
+//====================================================================
+template <uint32_t N, Component_C... C>
+void ComponentsManager<N, C...>::clear()
+{
+    m_tup.clear();
+    m_cacheDeletedEntities.clear();
+    m_refComponents.clear();
+    m_refDelComponents.clear();
+}
+
 }
