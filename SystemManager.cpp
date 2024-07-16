@@ -4,7 +4,7 @@ namespace ECS
 {
 //====================================================================
 template <uint32_t T>
-SystemManager<T>::SystemManager(EntitiesManager<T> *entitiesMan) : m_entitiesMan(entitiesMan)
+SystemManager<T>::SystemManager() : m_numComponents(T)
 {
 
 }
@@ -24,7 +24,7 @@ bool SystemManager<T>::addNewSystem(std::unique_ptr<System<T>> system)
 }
 }
 
-template ECS::SystemManager<4>::SystemManager(ECS::EntitiesManager<4>*); // OK: explicit instantiation
+// template ECS::SystemManager<4>::SystemManager(); // OK: explicit instantiation
 
 // template class ECS::EntitiesManager<4u>;
 
