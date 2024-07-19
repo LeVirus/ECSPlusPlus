@@ -39,7 +39,6 @@ struct Ha
         vect.emplace_back(comp);
     }
 };
-// TEST=====================================================
 
 struct Test : ECS::Component
 {
@@ -52,6 +51,7 @@ struct TestB : ECS::Component
 {
     int m_bs;
 };
+// TEST=====================================================
 
 using VectUI_t = std::vector<uint32_t>;
 
@@ -59,7 +59,6 @@ template <uint32_t N, Component_C... C>
 class ComponentsManager
 {
 public:
-    //DEFINIR array!!!!!!!!
     ComponentsManager() = default;
     ~ComponentsManager() = default;
 
@@ -118,12 +117,12 @@ public:
         {
             if(vect[i] > 0)
             {
-                (*m_refComponents[numEntity][i]).reserve(vect[i]);
-                //PB de template instanciation des composants à faire manuellement dans le projet cible
+                // m_refComponents[numEntity][i].reserve(vect[i]);
+                // //PB de template instanciation des composants à faire manuellement dans le projet cible
                 // for(uint32_t j = 0; j < vect[i]; ++j)
                 // {
-                //     // std::vector<T> &vect = std::get<j>(m_tup);
-                //     (*m_refComponents[numEntity][i]).emplace_back(addNewComponent(j));
+                //     std::vector<T> &vect = std::get<j>(m_tup);
+                //     m_refComponents[numEntity][i].emplace_back(addNewComponent(j));
                 // }
             }
         }

@@ -18,16 +18,42 @@ template <uint32_t T>
 class System
 {
 public:
-    ~System() = default;
+    virtual ~System() = default;
     virtual void execSystem() = 0;
     inline void linkSystemManager(const SystemManager<T> *systemManager)
     {
         m_systemManager = systemManager;
     }
-    void addComponentsToSystem(uint32_t typeComponent, uint32_t numberOfComponent);
+    void addComponentsToSystem(uint32_t typeComponent, uint32_t numberOfComponent)
+    {
+        assert(m_arrEntities.size() < typeComponent);
+        m_arrEntities[typeComponent] = numberOfComponent;
+        m_cacheUsedComponent.insert(typeComponent);
+    }
 protected:
-    System();
-    void updateEntities();
+
+    System() = default;
+    // void updateEntities();
+    //====================================================================
+    // template<uint32_t T>
+    void updateEntities()
+    {
+        const VectVectUI_t &vect = m_systemManager->getVectEntities();
+        bool ok;
+        for(uint32_t i = 0; i < vect.size(); ++i)
+        {
+            ok = true;
+            for(uint32_t j : m_cacheUsedComponent)
+            {
+                if(m_arrEntities[j] != vect[i][j])
+                {
+                    ok = false;
+                    break;
+                }
+            }
+            m_usedEntities.insert(i);
+        }
+    }
 private:
     const SystemManager<T> *m_systemManager = nullptr;
     //Definition of needed components

@@ -1,28 +1,16 @@
 #include <SystemManager.hpp>
 
-namespace ECS
-{
-//====================================================================
-template <uint32_t T>
-SystemManager<T>::SystemManager() : m_numComponents(T)
-{
-
-}
+template class ECS::SysTest<2>;
 
 
 //====================================================================
-template<uint32_t T>
-bool SystemManager<T>::addNewSystem(std::unique_ptr<System<T>> system)
-{
-    if(m_numComponents == 0)
-    {
-        return false;
-    }
-    m_vectSystem.emplace_back(std::move(system));
-    m_vectSystem.back().linkSystemManager(this);
-    return true;
-}
-}
+// template <uint32_t T>
+// SystemManager<T>::SystemManager() : m_numComponents(T)
+// {
+
+// }
+
+
 
 // template ECS::SystemManager<4>::SystemManager(); // OK: explicit instantiation
 

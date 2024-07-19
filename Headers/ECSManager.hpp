@@ -16,21 +16,25 @@ template<uint32_t T, Component_C... C>
 class ECSManager
 {
 public:
-    ECSManager();
+    ECSManager() = default;
     ~ECSManager() = default;
+    void init()
+    {
+        m_systemsManager.memEntitiesVect(m_entitiesManager.getVectEntities());
+    }
     inline const VectVectUI_t &getVectEntities()const
     {
         return m_entitiesManager.getVectEntities();
+    }
+    inline bool addNewSystem(std::unique_ptr<System<T>> system)
+    {
+        return m_systemsManager.addNewSystem(std::move(system));
     }
 private:
     EntitiesManager<T> m_entitiesManager;
     SystemManager<T> m_systemsManager;
     // template <uint32_t T, Component_C... C>
     ComponentsManager<T, C...> m_componentsManager;
-    uint32_t m_numComponents = 0;
+    const uint32_t m_numComponents = T;
 };
 }
-
-// template class ECS::ECSManager<4u, Test, TestB>;
-
-// template     ECS::ECSManager<4u, Test, TestB> ecs;

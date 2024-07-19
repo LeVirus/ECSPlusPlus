@@ -13,7 +13,7 @@ template<uint32_t T>
 class EntitiesManager
 {
 public:
-    EntitiesManager();
+    EntitiesManager() = default;
     ~EntitiesManager() = default;
     uint32_t createEntity(const VectUI_t &vect);
     void deleteEntity(uint32_t entityNum);
@@ -23,9 +23,10 @@ public:
         return m_vectEntities;
     }
 private:
-    const uint32_t m_numTotalComponants;
+    const uint32_t m_numTotalComponants = T;
     //mem location of deleted entities for future entity creation
     VectVectUI_t m_vectEntities;
+    VectUI_t m_cacheDeletedEntities;
 };
 
 }
