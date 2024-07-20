@@ -3,6 +3,8 @@
 #include <System.hpp>
 #include <vector>
 #include <cstdint>
+#include <iostream>
+#include <cassert>
 #include <memory>
 
 using VectUI_t = std::vector<uint32_t>;
@@ -43,6 +45,24 @@ public:
     {
         return *m_vectEntities;
     }
+    void execAllSystems()
+    {
+        for(uint32_t i = 0; i < m_vectSystem.size(); ++i)
+        {
+            m_vectSystem[i]->execSystem();
+        }
+    }
+
+    template <typename System_C>
+    System_C *getSystem(uint32_t numSystem)
+    {
+        if(numSystem >= m_vectSystem.size())
+        {
+            std::cout << "Warning: System not found.\n";
+            return nullptr;
+        }
+        return static_cast<System_C*>(m_vectSystem[numSystem].get());
+    }
 private:
     const VectVectUI_t *m_vectEntities;
     const uint32_t m_numComponents = T;
@@ -60,6 +80,7 @@ public:
     void execSystem()
     {
         ECS::System<T>::updateEntities();
+        std::cout << "LOL\n";
     }
 };
 
@@ -72,6 +93,7 @@ public:
     void execSystem()
     {
         ECS::System<T>::updateEntities();
+        std::cout << "kikou\n";
     }
 };
 

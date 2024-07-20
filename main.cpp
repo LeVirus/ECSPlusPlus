@@ -22,9 +22,9 @@ int main()
     ECS::ComponentsManager<2, ECS::Test, ECS::TestB> compTest;
     // compTest.addEntity({1, 1}); //issue template
     compTest.addNewComponent<0, ECS::Test>();
+    compTest.addEntity({1, 1});
     compTest.removeEntity(0);
     // compTest.removeEntity(5);
-    // compTest.addEntity({true, true});
     //================================================================================================================ComponentManager
 
     //================================================================================================================SystemManager
@@ -38,6 +38,13 @@ int main()
     ecs.init();
     // ecs.addNewSystem(std::make_unique<ECS::SysTest<2>>());
     ecs.addNewSystem(std::move(sys));
+    ECS::SysTest<2> *syss = ecs.getSystem<ECS::SysTest<2>>(0);
+    std::cerr << "dsfg\n";
+    syss->execSystem();
+    std::cerr << "mùmùmù\n";
+
+    ecs.execAllSystems();
+
     std::cout << " LLLL\n";
 
     return 0;

@@ -26,9 +26,19 @@ public:
     {
         return m_entitiesManager.getVectEntities();
     }
+    ///////////////////////////////////////////////////////////SystemManager
+    inline void execAllSystems()
+    {
+        m_systemsManager.execAllSystems();
+    }
     inline bool addNewSystem(std::unique_ptr<System<T>> system)
     {
         return m_systemsManager.addNewSystem(std::move(system));
+    }
+    template <typename System_C>
+    System_C *getSystem(uint32_t numSystem)
+    {
+        return m_systemsManager.template getSystem<System_C>(numSystem);
     }
 private:
     EntitiesManager<T> m_entitiesManager;
