@@ -1,6 +1,7 @@
 #pragma once
 
 #include <System.hpp>
+#include <Component.hpp>
 #include <vector>
 #include <cstdint>
 #include <iostream>

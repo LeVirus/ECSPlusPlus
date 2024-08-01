@@ -4,6 +4,7 @@
 #include <vector>
 #include <cstdint>
 #include <set>
+#include <ComponentsManager.hpp>
 
 namespace ECS
 {
@@ -20,10 +21,12 @@ class System
 public:
     virtual ~System() = default;
     virtual void execSystem() = 0;
+    //====================================================================
     inline void linkSystemManager(const SystemManager<T> *systemManager)
     {
         m_systemManager = systemManager;
     }
+    //====================================================================
     void addComponentsToSystem(uint32_t typeComponent, uint32_t numberOfComponent)
     {
         assert(m_arrEntities.size() < typeComponent);
@@ -31,11 +34,8 @@ public:
         m_cacheUsedComponent.insert(typeComponent);
     }
 protected:
-
     System() = default;
-    // void updateEntities();
     //====================================================================
-    // template<uint32_t T>
     void updateEntities()
     {
         const VectVectUI_t &vect = m_systemManager->getVectEntities();
@@ -51,14 +51,17 @@ protected:
                     break;
                 }
             }
-            m_usedEntities.insert(i);
+            if(ok)
+            {
+                m_usedEntities.insert(i);
+            }
         }
     }
 private:
     const SystemManager<T> *m_systemManager = nullptr;
     //Definition of needed components
     std::array<uint32_t, T> m_arrEntities;
-    std::set<uint32_t> m_usedEntities, m_cacheUsedComponent;
+    std::set<uint32_t> m_usedEntities, m_cacheUsedComponent;//mem possess components
 };
 
 template <typename S, uint32_t T>

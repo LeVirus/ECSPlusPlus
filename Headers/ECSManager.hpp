@@ -16,7 +16,11 @@ template<uint32_t T, Component_C... C>
 class ECSManager
 {
 public:
-    ECSManager() = default;
+    static ECSManager &instance()
+    {
+        static ECSManager ecs;
+        return ecs;
+    }
     ~ECSManager() = default;
     void init()
     {
@@ -41,6 +45,11 @@ public:
         return m_systemsManager.template getSystem<System_C>(numSystem);
     }
 private:
+    ECSManager()
+    {
+        assert(T == sizeof...(C));
+        init();
+    }
     EntitiesManager<T> m_entitiesManager;
     SystemManager<T> m_systemsManager;
     // template <uint32_t T, Component_C... C>

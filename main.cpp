@@ -8,6 +8,7 @@
 // template class ECS::ComponentsManager<4u, ECS::Test, ECS::TestB>;
 
 using TupleComp_t = std::tuple<ECS::Test, ECS::TestB>;
+using Ecsm_t = ECS::ECSManager<2u, ECS::Test, ECS::TestB>;
 
 int main()
 {
@@ -34,16 +35,16 @@ int main()
     //================================================================================================================SystemManager
 
     // ECS::EntitiesManager<4u> dd;
-    ECS::ECSManager<2u, ECS::Test, ECS::TestB> ecs;
-    ecs.init();
+    Ecsm_t::instance();
+    Ecsm_t::instance().init();
     // ecs.addNewSystem(std::make_unique<ECS::SysTest<2>>());
-    ecs.addNewSystem(std::move(sys));
-    ECS::SysTest<2> *syss = ecs.getSystem<ECS::SysTest<2>>(0);
+    Ecsm_t::instance().addNewSystem(std::move(sys));
+    ECS::SysTest<2> *syss = Ecsm_t::instance().getSystem<ECS::SysTest<2>>(0);
     std::cerr << "dsfg\n";
     syss->execSystem();
     std::cerr << "mùmùmù\n";
 
-    ecs.execAllSystems();
+    Ecsm_t::instance().execAllSystems();
 
     std::cout << " LLLL\n";
 

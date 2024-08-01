@@ -8,9 +8,6 @@ INCLUDEPATH += Headers
 SOURCES += \
         ComponentsManager.cpp \
         EntitiesManager.cpp \
-        System.cpp \
-        SystemManager.cpp \
-        ECSManager.cpp \
         main.cpp
 
 HEADERS += \
