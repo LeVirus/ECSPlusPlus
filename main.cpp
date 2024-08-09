@@ -1,6 +1,6 @@
 #include <iostream>
 #include <ECSManager.hpp>
-#include <SystemManager.hpp>>
+#include <SystemManager.hpp>
 #include <memory>
 // #include <TemplateDeclaration.hpp>
 
@@ -9,6 +9,37 @@
 
 using TupleComp_t = std::tuple<ECS::Test, ECS::TestB>;
 using Ecsm_t = ECS::ECSManager<2u, ECS::Test, ECS::TestB>;
+
+// TEST=====================================================
+template <uint32_t T>
+class SysTest : public ECS::System<T>
+{
+public:
+    SysTest() = default;
+    virtual ~SysTest() = default;
+    void execSystem()
+    {
+        ECS::System<T>::updateEntities/*<ECS::Test, ECS::TestB>*/();
+        std::cout << "LOL\n";
+    }
+};
+
+template <uint32_t T>
+class SysATest : public ECS::System<T>
+{
+public:
+    SysATest() = default;
+    ~SysATest() = default;
+    void execSystem()
+    {
+        ECS::System<T>::updateEntities/*<ECS::Test, ECS::TestB>*/();
+        std::cout << "kikou\n";
+    }
+};
+
+// TEST=====================================================
+
+
 
 int main()
 {
@@ -30,23 +61,18 @@ int main()
 
     //================================================================================================================SystemManager
     // ECS::SysTest<2> d;
-    std::unique_ptr<ECS::SysTest<2>> sys = std::make_unique<ECS::SysTest<2>>();
+    std::unique_ptr<SysTest<2>> sys = std::make_unique<SysTest<2>>();
     // ECS::SystemManager<4> cc;
     //================================================================================================================SystemManager
+    ECS::ECSManager<2u, ECS::Test, ECS::TestB>::instance();
 
     // ECS::EntitiesManager<4u> dd;
     Ecsm_t::instance();
-    Ecsm_t::instance().init();
     // ecs.addNewSystem(std::make_unique<ECS::SysTest<2>>());
     Ecsm_t::instance().addNewSystem(std::move(sys));
-    ECS::SysTest<2> *syss = Ecsm_t::instance().getSystem<ECS::SysTest<2>>(0);
-    std::cerr << "dsfg\n";
+    SysTest<2> *syss = Ecsm_t::instance().getSystem<SysTest<2>>(0);
     syss->execSystem();
-    std::cerr << "mùmùmù\n";
-
     Ecsm_t::instance().execAllSystems();
-
-    std::cout << " LLLL\n";
-
     return 0;
 }
+

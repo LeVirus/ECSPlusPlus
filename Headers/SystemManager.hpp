@@ -2,6 +2,7 @@
 
 #include <System.hpp>
 #include <Component.hpp>
+#include <ECSManager.hpp>
 #include <vector>
 #include <cstdint>
 #include <iostream>
@@ -24,6 +25,8 @@ class EntitiesManager;
 template <uint32_t T>
 class SystemManager
 {
+    using ArrUI_t = std::array<uint32_t, T>;
+    using VectArrUI_t = std::vector<ArrUI_t>;
 public:
     SystemManager() = default;
     virtual ~SystemManager() = default;
@@ -36,15 +39,6 @@ public:
         m_vectSystem.emplace_back(std::move(system));
         m_vectSystem.back()->linkSystemManager(this);
         return true;
-    }
-    //Warning exec this before use the classs
-    inline void memEntitiesVect(const VectVectUI_t &vect)
-    {
-        m_vectEntities = &vect;
-    }
-    inline const VectVectUI_t &getVectEntities()const
-    {
-        return *m_vectEntities;
     }
     void execAllSystems()
     {
@@ -65,40 +59,11 @@ public:
         return static_cast<System_C*>(m_vectSystem[numSystem].get());
     }
 private:
-    const VectVectUI_t *m_vectEntities;
     const uint32_t m_numComponents = T;
     std::vector<std::unique_ptr<System<T>>> m_vectSystem;
 };
 
 
-// TEST=====================================================
-template <uint32_t T>
-class SysTest : public ECS::System<T>
-{
-public:
-    SysTest() = default;
-    virtual ~SysTest() = default;
-    void execSystem()
-    {
-        ECS::System<T>::updateEntities();
-        std::cout << "LOL\n";
-    }
-};
-
-template <uint32_t T>
-class SysATest : public ECS::System<T>
-{
-public:
-    SysATest() = default;
-    ~SysATest() = default;
-    void execSystem()
-    {
-        ECS::System<T>::updateEntities();
-        std::cout << "kikou\n";
-    }
-};
-
-// TEST=====================================================
 
 }
 

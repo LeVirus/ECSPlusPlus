@@ -4,6 +4,7 @@
 #include <vector>
 #include <cstdint>
 #include <set>
+#include <ECSManager.hpp>
 #include <ComponentsManager.hpp>
 
 namespace ECS
@@ -18,6 +19,8 @@ using VectVectUI_t = std::vector<VectUI_t>;
 template <uint32_t T>
 class System
 {
+    using ArrUI_t = std::array<uint32_t, T>;
+    using VectArrUI_t = std::vector<ArrUI_t>;
 public:
     virtual ~System() = default;
     virtual void execSystem() = 0;
@@ -36,9 +39,10 @@ public:
 protected:
     System() = default;
     //====================================================================
+    template<Component_C... C>
     void updateEntities()
     {
-        const VectVectUI_t &vect = m_systemManager->getVectEntities();
+        const VectArrUI_t &vect = ECS::ECSManager<T, C...>::instance().getVectEntities();
         bool ok;
         for(uint32_t i = 0; i < vect.size(); ++i)
         {

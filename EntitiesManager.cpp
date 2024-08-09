@@ -1,34 +1,8 @@
 #include <EntitiesManager.hpp>
-#include <iostream>
-#include <cassert>
 #include <algorithm>
 
 namespace ECS
 {
-
-//====================================================================
-template <uint32_t T>
-uint32_t EntitiesManager<T>::createEntity(const VectUI_t &vect)
-{
-    uint32_t final;
-    if(m_numTotalComponants == 0)
-    {
-        std::cout << "EntitiesManager::createEntity // Error : Components num is not set\n";
-    }
-    if(m_cacheDeletedEntities.empty())
-    {
-        final = m_vectEntities.size();
-        m_vectEntities.emplace_back(vect);
-    }
-    else
-    {
-        assert(m_vectEntities.size() < m_cacheDeletedEntities.back());
-        m_vectEntities[m_cacheDeletedEntities.back()] = vect;
-        final = m_cacheDeletedEntities.back();
-        m_cacheDeletedEntities.pop_back();
-    }
-    return final;
-}
 
 //====================================================================
 template <uint32_t T>

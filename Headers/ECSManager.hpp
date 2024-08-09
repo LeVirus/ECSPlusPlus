@@ -2,12 +2,10 @@
 
 #include <cstdint>
 #include <vector>
-#include <EntitiesManager.hpp>
 #include <SystemManager.hpp>
+#include <System.hpp>
 #include <ComponentsManager.hpp>
 
-using VectUI_t = std::vector<uint32_t>;
-using VectVectUI_t = std::vector<VectUI_t>;
 
 namespace ECS
 {
@@ -15,20 +13,18 @@ namespace ECS
 template<uint32_t T, Component_C... C>
 class ECSManager
 {
+    using ArrUI_t = std::array<uint32_t, T>;
+    using VectArrUI_t = std::vector<ArrUI_t>;
 public:
     static ECSManager &instance()
     {
-        static ECSManager ecs;
-        return ecs;
+        static ECSManager ecsMan;
+        return ecsMan;
     }
     ~ECSManager() = default;
-    void init()
-    {
-        m_systemsManager.memEntitiesVect(m_entitiesManager.getVectEntities());
-    }
     inline const VectVectUI_t &getVectEntities()const
     {
-        return m_entitiesManager.getVectEntities();
+        return m_componentsManager.getVectEntities();
     }
     ///////////////////////////////////////////////////////////SystemManager
     inline void execAllSystems()
@@ -44,13 +40,15 @@ public:
     {
         return m_systemsManager.template getSystem<System_C>(numSystem);
     }
+    void addEntities(const std::array<uint32_t, T> &vect)
+    {
+        m_componentsManager.addEntity(vect);
+    }
 private:
     ECSManager()
     {
         assert(T == sizeof...(C));
-        init();
     }
-    EntitiesManager<T> m_entitiesManager;
     SystemManager<T> m_systemsManager;
     // template <uint32_t T, Component_C... C>
     ComponentsManager<T, C...> m_componentsManager;

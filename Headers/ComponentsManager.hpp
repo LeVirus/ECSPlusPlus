@@ -9,6 +9,7 @@
 #include <iostream>
 #include <cassert>
 #include <Component.hpp>
+#include <EntitiesManager.hpp>
 
 #include <tuple>
 
@@ -58,6 +59,8 @@ using VectUI_t = std::vector<uint32_t>;
 template <uint32_t N, Component_C... C>
 class ComponentsManager
 {
+    using ArrUI_t = std::array<uint32_t, N>;
+    using VectArrUI_t = std::vector<ArrUI_t>;
 public:
     ComponentsManager() = default;
     ~ComponentsManager() = default;
@@ -102,6 +105,7 @@ public:
     uint32_t addEntity(const std::array<uint32_t, N> &vect)
     {
         uint32_t numEntity;
+        uint32_t numEntityB = m_entitiesManager.createEntity(vect);
         if(!m_cacheDeletedEntities.empty())
         {
             std::set<uint32_t>::iterator it = m_cacheDeletedEntities.begin();
@@ -113,6 +117,7 @@ public:
             numEntity = m_refComponents.size();
             m_refComponents.emplace_back(std::array<VectUI_t, N>());
         }
+        assert(numEntity == numEntityB);
         for(uint32_t i = 0; i < N; ++i)
         {
             if(vect[i] > 0)
@@ -146,12 +151,19 @@ public:
         return i;
     }
     void clear();
+
+    //====================================================================
+    inline const VectArrUI_t &getVectEntities()const
+    {
+        return m_entitiesManager.getVectEntities();
+    }
 private:
     std::tuple<std::vector<C>...> m_tup;
     std::set<uint32_t> m_cacheDeletedEntities;
     //cache index of entities's component
     std::vector<std::array<VectUI_t, N>> m_refComponents;
     std::array<std::vector<uint32_t>, N> m_refDelComponents;
+    EntitiesManager<N> m_entitiesManager;
 };
 }
 
