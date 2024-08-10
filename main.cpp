@@ -18,8 +18,8 @@ int main()
     // std:: cerr << getTupleElementsNumber<TupleComp_t>() << "\n";
 
     //================================================================================================================ComponentManager
-    ECS::Test *a = new ECS::Test();
-    ECS::TestB *b = new ECS::TestB();
+    // ECS::Test *a = new ECS::Test();
+    // ECS::TestB *b = new ECS::TestB();
     // std::get<0>(tt).push_back(*a);
     std::unique_ptr<ECS::TestComponentsManager<2, ECS::Test, ECS::TestB>> compTest = std::make_unique<ECS::TestComponentsManager<2, ECS::Test, ECS::TestB>>();
     // compTest.addEntity({1, 1}); //issue template
@@ -40,12 +40,17 @@ int main()
     // ECS::EntitiesManager<4u> dd;
     // Ecsm_t::instance();
     // ecs.addNewSystem(std::make_unique<ECS::SysTest<2>>());
-    Ecsm_t::instance().addNewSystem(std::move(sys));
     Ecsm_t::instance().associateCompManager(std::move(compTest));
+
+    Ecsm_t::instance().addNewSystem(std::move(sys));
 
     uint32_t dd = Ecsm_t::instance().addEntity({1, 1});
     Ecsm_t::instance().removeEntity(dd);
     dd = Ecsm_t::instance().addEntity({1, 1});
+    dd = Ecsm_t::instance().addEntity({1, 1});
+    dd = Ecsm_t::instance().addEntity({1, 1});
+    // Ecsm_t::instance().updateEntitiesFromSystem(0);
+    Ecsm_t::instance().updateEntitiesFromSystems();
     Ecsm_t::instance().execAllSystems();
     return 0;
 }

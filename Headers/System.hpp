@@ -36,8 +36,6 @@ public:
         m_arrEntities[typeComponent] = numberOfComponent;
         m_cacheUsedComponent.insert(typeComponent);
     }
-protected:
-    System() = default;
     //====================================================================
     void updateEntities(const VectArrUI_t &vectEntities)
     {
@@ -59,7 +57,9 @@ protected:
             }
         }
     }
-private:
+protected:
+    System() = default;
+protected:
     const SystemManager<T> *m_systemManager = nullptr;
     //Definition of needed components
     std::array<uint32_t, T> m_arrEntities;

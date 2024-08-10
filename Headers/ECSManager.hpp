@@ -32,6 +32,20 @@ public:
     }
 
     //====================================================================
+    void updateEntitiesFromSystems()
+    {
+        const VectArrUI_t &vect = m_componentsManager->getVectEntities();
+        m_systemsManager.updateEntitiesFromSystems(vect);
+    }
+
+    //====================================================================
+    void updateEntitiesFromSystem(uint32_t numSystem)
+    {
+        const VectArrUI_t &vect = m_componentsManager->getVectEntities();
+        m_systemsManager.updateEntitiesFromSystem(numSystem, vect);
+    }
+
+    //====================================================================
     inline const VectVectUI_t &getVectEntities()const
     {
         return m_componentsManager->getVectEntities();

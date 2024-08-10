@@ -63,7 +63,13 @@ class ComponentsManager
     using VectArrUI_t = std::vector<ArrUI_t>;
 public:
     ComponentsManager() = default;
-    ~ComponentsManager() = default;
+    virtual ~ComponentsManager() = default;
+
+    //====================================================================
+    inline const VectArrUI_t &getVectEntities()const
+    {
+        return m_entitiesManager.getVectEntities();
+    }
 
     void reserveEntities(uint32_t entitiesNumber);
 
@@ -142,12 +148,6 @@ public:
         return i;
     }
     void clear();
-
-    //====================================================================
-    inline const VectArrUI_t &getVectEntities()const
-    {
-        return m_entitiesManager.getVectEntities();
-    }
 protected:
     std::tuple<std::vector<C>...> m_tup;
     std::set<uint32_t> m_cacheDeletedEntities;

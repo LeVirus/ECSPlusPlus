@@ -30,6 +30,7 @@ class SystemManager
 public:
     SystemManager() = default;
     virtual ~SystemManager() = default;
+    //====================================================================
     bool addNewSystem(std::unique_ptr<System<T>> system)
     {
         if(m_numComponents == 0)
@@ -40,6 +41,8 @@ public:
         m_vectSystem.back()->linkSystemManager(this);
         return true;
     }
+
+    //====================================================================
     void execAllSystems()
     {
         for(uint32_t i = 0; i < m_vectSystem.size(); ++i)
@@ -48,6 +51,22 @@ public:
         }
     }
 
+    //====================================================================
+    void updateEntitiesFromSystems(const VectArrUI_t &entitiesVect)
+    {
+        for(uint32_t i = 0; i < m_vectSystem.size(); ++i)
+        {
+            m_vectSystem[i]->updateEntities(entitiesVect);
+        }
+    }
+
+    //====================================================================
+    void updateEntitiesFromSystem(uint32_t numSystem, const VectArrUI_t &entitiesVect)
+    {
+        m_vectSystem[numSystem]->updateEntities(entitiesVect);
+    }
+
+    //====================================================================
     template <typename System_C>
     System_C *getSystem(uint32_t numSystem)
     {

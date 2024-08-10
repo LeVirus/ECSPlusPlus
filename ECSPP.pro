@@ -7,7 +7,6 @@ INCLUDEPATH += Headers
 
 SOURCES += \
         ComponentsManager.cpp \
-        EntitiesManager.cpp \
         main.cpp
 
 HEADERS += \
