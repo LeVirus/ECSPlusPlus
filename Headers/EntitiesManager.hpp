@@ -19,6 +19,7 @@ public:
     EntitiesManager() = default;
     ~EntitiesManager() = default;
 
+    //====================================================================
     uint32_t createEntity(const std::array<uint32_t, T> &vect)
     {
         uint32_t final;
@@ -33,7 +34,7 @@ public:
         }
         else
         {
-            assert(m_vectEntities.size() < m_cacheDeletedEntities.back());
+            assert(m_vectEntities.size() >= m_cacheDeletedEntities.back());
             m_vectEntities[m_cacheDeletedEntities.back()] = vect;
             final = m_cacheDeletedEntities.back();
             m_cacheDeletedEntities.pop_back();
@@ -41,8 +42,28 @@ public:
         return final;
     }
 
-    void deleteEntity(uint32_t entityNum);
-    void clear();
+    //====================================================================
+    void deleteEntity(uint32_t entityNum)
+    {
+        if(entityNum >= m_vectEntities.size())
+        {
+            return;
+        }
+        if(std::find(m_cacheDeletedEntities.begin(), m_cacheDeletedEntities.end(), entityNum) != m_cacheDeletedEntities.end())
+        {
+            return;
+        }
+        m_cacheDeletedEntities.emplace_back(entityNum);
+        std::fill(m_vectEntities[entityNum].begin(), m_vectEntities[entityNum].end(), 0);
+    }
+
+    //====================================================================
+    void clear()
+    {
+        m_cacheDeletedEntities.clear();
+        m_vectEntities.clear();
+    }
+
     inline const VectArrUI_t &getVectEntities()const
     {
         return m_vectEntities;

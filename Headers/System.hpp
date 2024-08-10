@@ -39,17 +39,15 @@ public:
 protected:
     System() = default;
     //====================================================================
-    template<Component_C... C>
-    void updateEntities()
+    void updateEntities(const VectArrUI_t &vectEntities)
     {
-        const VectArrUI_t &vect = ECS::ECSManager<T, C...>::instance().getVectEntities();
         bool ok;
-        for(uint32_t i = 0; i < vect.size(); ++i)
+        for(uint32_t i = 0; i < vectEntities.size(); ++i)
         {
             ok = true;
             for(uint32_t j : m_cacheUsedComponent)
             {
-                if(m_arrEntities[j] != vect[i][j])
+                if(m_arrEntities[j] != vectEntities[i][j])
                 {
                     ok = false;
                     break;

@@ -84,21 +84,23 @@ public:
             }
         }
         m_cacheDeletedEntities.insert(numEntity);
+        m_entitiesManager.deleteEntity(numEntity);
     }
 
     //====================================================================
-    template <Component_C T>
-    std::optional<T> &getComponent(uint32_t entityNum, uint32_t componentType, uint32_t componentNum = 0)
+    template <Component_C T, uint32_t NC>
+    T *getComponent(uint32_t entityNum, uint32_t componentNum = 0)
     {
         assert(entityNum < m_refComponents.size());
-        assert(componentType < N);
-        if(m_refComponents[entityNum][componentType] || componentNum >= m_refComponents[entityNum][componentType].size())
+        assert(NC < N);
+        if(m_refComponents[entityNum][NC].size() == 0 || componentNum >= m_refComponents[entityNum][NC].size())
         {
-            return std::nullopt;
+            return nullptr;
         }
-        uint32_t indexComp = m_refComponents[entityNum][componentType][componentNum];
-        std::vector<T> &vect = std::get<componentType>(m_tup);
-        return vect[indexComp];
+        uint32_t indexComp = m_refComponents[entityNum][NC][componentNum];
+        std::vector<T> &vect = std::get<NC>(m_tup);
+        assert(indexComp < vect.size());
+        return &vect[indexComp];
     }
 
     //====================================================================
@@ -118,22 +120,11 @@ public:
             m_refComponents.emplace_back(std::array<VectUI_t, N>());
         }
         assert(numEntity == numEntityB);
-        for(uint32_t i = 0; i < N; ++i)
-        {
-            if(vect[i] > 0)
-            {
-                // m_refComponents[numEntity][i].reserve(vect[i]);
-                // //PB de template instanciation des composants à faire manuellement dans le projet cible
-                // for(uint32_t j = 0; j < vect[i]; ++j)
-                // {
-                //     std::vector<T> &vect = std::get<j>(m_tup);
-                //     m_refComponents[numEntity][i].emplace_back(addNewComponent(j));
-                // }
-            }
-        }
+        instanciateComponentFromEntity(numEntity, vect);
         return numEntity;
     }
 
+    virtual void instanciateComponentFromEntity(uint32_t numEntity, const std::array<uint32_t, N> &vect) = 0;
     //====================================================================
     template <uint32_t compType, Component_C T>
     uint32_t addNewComponent()
@@ -157,7 +148,7 @@ public:
     {
         return m_entitiesManager.getVectEntities();
     }
-private:
+protected:
     std::tuple<std::vector<C>...> m_tup;
     std::set<uint32_t> m_cacheDeletedEntities;
     //cache index of entities's component
