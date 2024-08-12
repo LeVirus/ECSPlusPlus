@@ -37,7 +37,6 @@ public:
     }
 
     //====================================================================
-    // template <Component_C T>
     void removeEntity(uint32_t numEntity)
     {
         assert(numEntity < m_refComponents.size());
@@ -149,5 +148,3 @@ uint32_t getTupleElementsNumber()
 {
     return std::tuple_size<T>{}; // or at run time
 }
-
-// template class ECS::ComponentsManager<4u, ECS::Test, ECS::TestB>;

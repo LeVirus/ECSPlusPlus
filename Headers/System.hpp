@@ -25,11 +25,6 @@ public:
     virtual ~System() = default;
     virtual void execSystem() = 0;
     //====================================================================
-    inline void linkSystemManager(const SystemManager<T> *systemManager)
-    {
-        m_systemManager = systemManager;
-    }
-    //====================================================================
     void addComponentsToSystem(uint32_t typeComponent, uint32_t numberOfComponent)
     {
         if(numberOfComponent == 0)
@@ -70,7 +65,6 @@ public:
 protected:
     System() = default;
 protected:
-    const SystemManager<T> *m_systemManager = nullptr;
     //Definition of needed components
     std::array<uint32_t, T> m_arrEntities;
     std::set<uint32_t> m_usedEntities, m_cacheUsedComponent;//mem possess components

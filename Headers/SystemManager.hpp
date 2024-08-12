@@ -15,10 +15,6 @@ using VectVectUI_t = std::vector<VectUI_t>;
 namespace ECS
 {
 
-//FORWARD DECL
-// template <uint32_t T>
-// class System;
-
 template <uint32_t T>
 class EntitiesManager;
 
@@ -38,7 +34,6 @@ public:
             return false;
         }
         m_vectSystem.emplace_back(std::move(system));
-        m_vectSystem.back()->linkSystemManager(this);
         return true;
     }
 

@@ -110,7 +110,6 @@ private:
         assert(T == sizeof...(C));
     }
     SystemManager<T> m_systemsManager;
-    // template <uint32_t T, Component_C... C>
     std::unique_ptr<ComponentsManager<T, C...>> m_componentsManager;
     const uint32_t m_numComponents = T;
 };
