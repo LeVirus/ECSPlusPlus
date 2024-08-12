@@ -2,12 +2,10 @@
 
 #include <vector>
 #include <cstdint>
-#include <optional>
-#include <memory>
 #include <set>
 #include <array>
-#include <iostream>
 #include <cassert>
+#include <memory>
 #include <Component.hpp>
 #include <EntitiesManager.hpp>
 
@@ -18,42 +16,6 @@
 namespace ECS
 {
 
-
-// TEST=====================================================
-// using VectorTemp = std::vector<T>;
-template <uint32_t SS, Component_C... C>
-struct Ha
-{
-    std::tuple<std::vector<C>...> m_tup;
-    //cache index of entities's component
-    std::array<std::vector<uint32_t>, SS> m_refComponents;
-
-    std::tuple<std::vector<C>...> getTup()
-    {
-        return m_tup;
-    }
-
-    template <Component_C SC, uint32_t compNum>
-    void add(SC &comp)
-    {
-        std::vector<SC> &vect = std::get<compNum>(m_tup);
-        vect.emplace_back(comp);
-    }
-};
-
-struct Test : ECS::Component
-{
-    Test() = default;
-    ~Test() = default;
-    int m_b;
-};
-
-struct TestB : ECS::Component
-{
-    int m_bs;
-};
-// TEST=====================================================
-
 using VectUI_t = std::vector<uint32_t>;
 
 template <uint32_t N, Component_C... C>
@@ -62,7 +24,10 @@ class ComponentsManager
     using ArrUI_t = std::array<uint32_t, N>;
     using VectArrUI_t = std::vector<ArrUI_t>;
 public:
-    ComponentsManager() = default;
+    ComponentsManager()
+    {
+        m_tup = std::make_unique<std::tuple<std::vector<C>...>>();
+    }
     virtual ~ComponentsManager() = default;
 
     //====================================================================
@@ -70,8 +35,6 @@ public:
     {
         return m_entitiesManager.getVectEntities();
     }
-
-    void reserveEntities(uint32_t entitiesNumber);
 
     //====================================================================
     // template <Component_C T>
@@ -97,6 +60,7 @@ public:
     template <Component_C T, uint32_t NC>
     T *getComponent(uint32_t entityNum, uint32_t componentNum = 0)
     {
+        std::cerr << entityNum << "  " << m_refComponents.size() << "\n";
         assert(entityNum < m_refComponents.size());
         assert(NC < N);
         if(m_refComponents[entityNum][NC].size() == 0 || componentNum >= m_refComponents[entityNum][NC].size())
@@ -104,7 +68,7 @@ public:
             return nullptr;
         }
         uint32_t indexComp = m_refComponents[entityNum][NC][componentNum];
-        std::vector<T> &vect = std::get<NC>(m_tup);
+        std::vector<T> &vect = std::get<NC>(*m_tup);
         assert(indexComp < vect.size());
         return &vect[indexComp];
     }
@@ -130,12 +94,12 @@ public:
         return numEntity;
     }
 
-    virtual void instanciateComponentFromEntity(uint32_t numEntity, const std::array<uint32_t, N> &vect) = 0;
+
     //====================================================================
     template <uint32_t compType, Component_C T>
     uint32_t addNewComponent()
     {
-        std::vector<T> &vect = std::get<compType>(m_tup);
+        std::vector<T> &vect = std::get<compType>(*m_tup);
         //if no empty case add new one
         if(m_refDelComponents[compType].empty())
         {
@@ -147,9 +111,29 @@ public:
         vect[i] = T();
         return i;
     }
-    void clear();
+
+    //====================================================================
+    void clear()
+    {
+        m_entitiesManager.clear();
+        m_tup = std::make_unique<std::tuple<std::vector<C>...>>();
+        m_cacheDeletedEntities.clear();
+        m_refComponents.clear();
+        for(uint32_t i = 0; i < m_refDelComponents.size(); ++i)
+        {
+            m_refDelComponents[i].clear();
+        }
+    }
+
+    virtual void instanciateComponentFromEntity(uint32_t numEntity, const std::array<uint32_t, N> &vect) = 0;
+private:
+    template<uint32_t TN, Component_C CC>
+    std::vector<CC> &getVectTuple()
+    {
+        return std::get<TN>(*m_tup);
+    }
 protected:
-    std::tuple<std::vector<C>...> m_tup;
+    std::unique_ptr<std::tuple<std::vector<C>...>> m_tup;
     std::set<uint32_t> m_cacheDeletedEntities;
     //cache index of entities's component
     std::vector<std::array<VectUI_t, N>> m_refComponents;

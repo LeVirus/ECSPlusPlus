@@ -32,13 +32,23 @@ public:
     //====================================================================
     void addComponentsToSystem(uint32_t typeComponent, uint32_t numberOfComponent)
     {
-        assert(m_arrEntities.size() < typeComponent);
+        if(numberOfComponent == 0)
+        {
+            return;
+        }
+        assert(typeComponent < m_arrEntities.size());
         m_arrEntities[typeComponent] = numberOfComponent;
         m_cacheUsedComponent.insert(typeComponent);
     }
     //====================================================================
     void updateEntities(const VectArrUI_t &vectEntities)
     {
+        if(m_cacheUsedComponent.empty())
+        {
+            std::cout << "Warning: No used component set.\n";
+            return;
+        }
+        m_usedEntities.clear();
         bool ok;
         for(uint32_t i = 0; i < vectEntities.size(); ++i)
         {

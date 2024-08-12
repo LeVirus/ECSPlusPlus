@@ -52,6 +52,15 @@ public:
     }
 
     //====================================================================
+    void execSystem(uint32_t systemNum)
+    {
+        if(systemNum < m_vectSystem.size())
+        {
+            m_vectSystem[systemNum]->execSystem();
+        }
+    }
+
+    //====================================================================
     void updateEntitiesFromSystems(const VectArrUI_t &entitiesVect)
     {
         for(uint32_t i = 0; i < m_vectSystem.size(); ++i)

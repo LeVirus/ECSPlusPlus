@@ -52,6 +52,12 @@ public:
     }
 
     //====================================================================
+    void execSystem(uint32_t systemNum)
+    {
+        m_systemsManager.execSystem(systemNum);
+    }
+
+    //====================================================================
     inline void execAllSystems()
     {
         m_systemsManager.execAllSystems();
@@ -91,6 +97,12 @@ public:
         return m_componentsManager->template getComponent<Comp, NC>(entityNum, componentNum);
     }
 
+    //====================================================================
+    void clearEntities()
+    {
+        assert(m_componentsManager);
+        m_componentsManager->clear();
+    }
 private:
     //====================================================================
     ECSManager()

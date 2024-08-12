@@ -6,7 +6,6 @@ QMAKE_CXXFLAGS += -std=c++23  -fcoroutines #-fmodules-ts -xc++-system-header ios
 INCLUDEPATH += Headers
 
 SOURCES += \
-        ComponentsManager.cpp \
         main.cpp
 
 HEADERS += \
@@ -15,7 +14,4 @@ HEADERS += \
         Headers/ECSManager.hpp \
         Headers/EntitiesManager.hpp \
         Headers/System.hpp \
-        Headers/SystemManager.hpp \
-    Headers/TemplateDeclaration.hpp \
-    Headers/TestCompMan.hpp \
-    Headers/TestSystem.hpp
+        Headers/SystemManager.hpp
